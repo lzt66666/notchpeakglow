@@ -12,11 +12,20 @@ PeakGlow 是一款 macOS 菜单栏常驻小工具（好吧，其实它连菜单�
 
 | 负载 | 效果 |
 |---|---|
-| 低 | 无任何视觉提示（零渲染、零开销） |
+| 低/关 | 无任何视觉提示（零渲染、零开销） |
 | 中 | 刘海周围缓慢流动的彩虹光晕（Apple Intelligence 极光风，带 HDR） |
 | 高 | 鲜艳蓝色光晕 + HDR 峰值亮度 + 0.5Hz 呼吸脉冲 |
 
-<p align="center"><sub>（此处预留效果图）</sub></p>
+<p align="center">
+<table>
+  <tr>
+    <td align="center"><img src="./效果图/中.png" width="210"/><br><sub>中等负载‑彩虹光晕</sub></td>
+    <td align="center"><img src="./效果图/高.png" width="210"/><br><sub>高负载‑蓝色呼吸光晕</sub></td>
+    <td align="center"><img src="./效果图/悬停界面.png" width="210"/><br><sub>刘海悬停控制气泡</sub></td>
+    <td align="center"><img src="./效果图/设置界面.png" width="210"/><br><sub>参数设置面板</sub></td>
+  </tr>
+</table>
+</p>
 
 ## 特性
 
@@ -30,7 +39,6 @@ PeakGlow 是一款 macOS 菜单栏常驻小工具（好吧，其实它连菜单�
   | MacBook Pro 16" | 30 W | 55 W |
 - **真 HDR 渲染** —— Metal `rgba16Float` + extended linear sRGB + EDR headroom 自适应，XDR 屏幕 blue 光可达 SDR 白之上；不支持的屏幕自动回退鲜艳 SDR
 - **防误触** —— 5 样本滑动平均 + 滞回 + 保持时间，瞬时功率尖峰不会触发动画
-- **游戏友好** —— 原生全屏空间（大多数游戏）中光晕自动不可见；光晕窗口 `ignoresMouseEvents` 全穿透、`sharingType = .none` **不出现在截图与录屏中**
 - **省电** —— 低负载时渲染完全停止，空闲自身 CPU 占用 ≈ 0
 
 ## 系统要求
