@@ -1,0 +1,102 @@
+{
+  "fill" : {
+    "linear-gradient" : [
+      "display-p3:0.73600,0.75330,0.67828,1.00000",
+      "extended-srgb:0.00000,0.76471,0.81569,1.00000"
+    ],
+    "orientation" : {
+      "start" : {
+        "x" : 0.5,
+        "y" : 1
+      },
+      "stop" : {
+        "x" : 0.5,
+        "y" : 0.3
+      }
+    }
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.72661,1.00000,0.35559,1.00000",
+              "display-p3:0.96783,0.06677,0.47904,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 0.21891075102880658,
+                "y" : 0
+              },
+              "stop" : {
+                "x" : 0.5,
+                "y" : 1
+              }
+            }
+          },
+          "image-name" : "logo_0000s_0000_CHECK.png",
+          "name" : "logo_0000s_0000_CHECK"
+        },
+        {
+          "image-name" : "logo_0000s_0001_HITRAN-IR-absorption.png",
+          "name" : "logo_0000s_0001_HITRAN-IR-absorption"
+        },
+        {
+          "fill" : "none",
+          "glass" : false,
+          "image-name" : "logo_0000s_0002_矩形-1.png",
+          "name" : "logo_0000s_0002_矩形-1"
+        },
+        {
+          "fill-specializations" : [
+            {
+              "value" : {
+                "solid" : "extended-srgb:0.00000,0.53333,1.00000,1.00000"
+              }
+            },
+            {
+              "appearance" : "dark",
+              "value" : {
+                "solid" : "extended-srgb:0.00000,0.53333,1.00000,1.00000"
+              }
+            }
+          ],
+          "glass" : false,
+          "image-name" : "logo_0000s_0004_吸收曲线.png",
+          "name" : "logo_0000s_0003_吸收曲线"
+        },
+        {
+          "fill-specializations" : [
+            {
+              "value" : "automatic"
+            },
+            {
+              "appearance" : "dark",
+              "value" : {
+                "solid" : "display-p3:0.51702,0.53510,0.50641,1.00000"
+              }
+            }
+          ],
+          "glass" : false,
+          "image-name" : "logo_0000s_0003_坐标轴.png",
+          "name" : "logo_0000s_0004_坐标轴"
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}

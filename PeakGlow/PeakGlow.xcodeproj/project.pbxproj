@@ -1,0 +1,419 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0AF6604F3B84447A8D82F12C /* GamepadDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC15F8F50226CE5F4139255 /* GamepadDetector.swift */; };
+		0C827D8DD283534E2C80E975 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EA2667F8029096F50783C6 /* AppDelegate.swift */; };
+		1258E99142E45C4822D8916A /* NotchedScreenFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9C61170DDE7370117EE80E /* NotchedScreenFinder.swift */; };
+		20949F3D46C7662AC9E77074 /* CPUSampler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D0C51FB3504597AE05A684 /* CPUSampler.swift */; };
+		2B032AFD630F3D52844285AB /* MachineProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC475527A2DCCC0F019E87C /* MachineProfile.swift */; };
+		33DEBAD1296BBB9C53D2CC7B /* FirstRunWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4F84256D3BFB04B82F10C2 /* FirstRunWindow.swift */; };
+		5ADA518D0A58FE3C346AFD29 /* LoadLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041F8511C918A713E5CA7422 /* LoadLevel.swift */; };
+		75E52D962DBF0DA416B232AB /* GlowRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE98DF89F29E5522CA839459 /* GlowRenderer.swift */; };
+		7E4B5EF42BE98B66535685D6 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A1EC63FCD5D81D85E9DB8 /* AppSettings.swift */; };
+		8247575F1B04868197DAA8E4 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E325D50F3CD2289EC27B9B37 /* main.swift */; };
+		9472BD2A8EE4018D1BE65F4D /* BubblePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D149312326374FC6AAE91C3 /* BubblePanel.swift */; };
+		AF112D09527C13BCA0D2F736 /* GlowWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC3B4E0AABB45544D7FD46F /* GlowWindow.swift */; };
+		C84C3ADC8A669FE527FADEC3 /* PowerSampler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC527218437FDBCE3745D7C7 /* PowerSampler.swift */; };
+		C85DF53558B1C2147F97FAC4 /* GlowMetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E117F4343DB12781F2BF067 /* GlowMetalView.swift */; };
+		C8CE40F8867D1AE1641656A5 /* NotchHoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE289D61299F7311EF8C24D /* NotchHoverController.swift */; };
+		CA0055BA66B7EF06FA195ED8 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873C19AC9710E7C3E5B33550 /* AppState.swift */; };
+		CA05C618538B330CE92761A3 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = AD53F473276B7C760EF4F271 /* Shaders.metal */; };
+		CAA88B5EB9E75ADD581A79A2 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = F2B9FD6D34CBBFF87048788A /* AppIcon.icon */; };
+		EAB5C494BCEC6905F683DB32 /* BubbleContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5507590C1DD1C460678DA601 /* BubbleContentView.swift */; };
+		F6B5AC507E4F5D935F9247EF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765566A9E74AE98C9852F586 /* SettingsView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		041F8511C918A713E5CA7422 /* LoadLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadLevel.swift; sourceTree = "<group>"; };
+		20EA2667F8029096F50783C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4D149312326374FC6AAE91C3 /* BubblePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblePanel.swift; sourceTree = "<group>"; };
+		5507590C1DD1C460678DA601 /* BubbleContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleContentView.swift; sourceTree = "<group>"; };
+		765566A9E74AE98C9852F586 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		873C19AC9710E7C3E5B33550 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		8BC3B4E0AABB45544D7FD46F /* GlowWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlowWindow.swift; sourceTree = "<group>"; };
+		921A1EC63FCD5D81D85E9DB8 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		9E117F4343DB12781F2BF067 /* GlowMetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlowMetalView.swift; sourceTree = "<group>"; };
+		AD53F473276B7C760EF4F271 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		AE98DF89F29E5522CA839459 /* GlowRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlowRenderer.swift; sourceTree = "<group>"; };
+		B0D0C51FB3504597AE05A684 /* CPUSampler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUSampler.swift; sourceTree = "<group>"; };
+		BBC15F8F50226CE5F4139255 /* GamepadDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamepadDetector.swift; sourceTree = "<group>"; };
+		BD9C61170DDE7370117EE80E /* NotchedScreenFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchedScreenFinder.swift; sourceTree = "<group>"; };
+		BEE289D61299F7311EF8C24D /* NotchHoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchHoverController.swift; sourceTree = "<group>"; };
+		CFC475527A2DCCC0F019E87C /* MachineProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineProfile.swift; sourceTree = "<group>"; };
+		DB7017F1642EF8284228D25F /* PeakGlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PeakGlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E325D50F3CD2289EC27B9B37 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		EE4F84256D3BFB04B82F10C2 /* FirstRunWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstRunWindow.swift; sourceTree = "<group>"; };
+		F2B9FD6D34CBBFF87048788A /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = AppIcon.icon; sourceTree = "<group>"; };
+		FC527218437FDBCE3745D7C7 /* PowerSampler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerSampler.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		2C80B063B77A4206FA01ABB2 /* Monitor */ = {
+			isa = PBXGroup;
+			children = (
+				B0D0C51FB3504597AE05A684 /* CPUSampler.swift */,
+				041F8511C918A713E5CA7422 /* LoadLevel.swift */,
+				FC527218437FDBCE3745D7C7 /* PowerSampler.swift */,
+			);
+			path = Monitor;
+			sourceTree = "<group>";
+		};
+		3D199B5FDB11DB42438AF189 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				EE4F84256D3BFB04B82F10C2 /* FirstRunWindow.swift */,
+				765566A9E74AE98C9852F586 /* SettingsView.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		695A73C8DD9495EDA82AA2FD /* PeakGlow */ = {
+			isa = PBXGroup;
+			children = (
+				20EA2667F8029096F50783C6 /* AppDelegate.swift */,
+				F2B9FD6D34CBBFF87048788A /* AppIcon.icon */,
+				E325D50F3CD2289EC27B9B37 /* main.swift */,
+				C5F59C6FF6C2C311F55594CF /* Glow */,
+				F5755BD0F6F07EB7BF0DDC89 /* Interaction */,
+				2C80B063B77A4206FA01ABB2 /* Monitor */,
+				B59F0E1CB67952913DF59010 /* Support */,
+				3D199B5FDB11DB42438AF189 /* UI */,
+			);
+			path = PeakGlow;
+			sourceTree = "<group>";
+		};
+		739E21D7B2F1F625E0C76BD8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DB7017F1642EF8284228D25F /* PeakGlow.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B59F0E1CB67952913DF59010 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				921A1EC63FCD5D81D85E9DB8 /* AppSettings.swift */,
+				873C19AC9710E7C3E5B33550 /* AppState.swift */,
+				CFC475527A2DCCC0F019E87C /* MachineProfile.swift */,
+				BD9C61170DDE7370117EE80E /* NotchedScreenFinder.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		C5F59C6FF6C2C311F55594CF /* Glow */ = {
+			isa = PBXGroup;
+			children = (
+				9E117F4343DB12781F2BF067 /* GlowMetalView.swift */,
+				AE98DF89F29E5522CA839459 /* GlowRenderer.swift */,
+				8BC3B4E0AABB45544D7FD46F /* GlowWindow.swift */,
+				AD53F473276B7C760EF4F271 /* Shaders.metal */,
+			);
+			path = Glow;
+			sourceTree = "<group>";
+		};
+		CF2147FB37C9CE6FDC2F4469 = {
+			isa = PBXGroup;
+			children = (
+				695A73C8DD9495EDA82AA2FD /* PeakGlow */,
+				739E21D7B2F1F625E0C76BD8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F5755BD0F6F07EB7BF0DDC89 /* Interaction */ = {
+			isa = PBXGroup;
+			children = (
+				5507590C1DD1C460678DA601 /* BubbleContentView.swift */,
+				4D149312326374FC6AAE91C3 /* BubblePanel.swift */,
+				BBC15F8F50226CE5F4139255 /* GamepadDetector.swift */,
+				BEE289D61299F7311EF8C24D /* NotchHoverController.swift */,
+			);
+			path = Interaction;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C902503C5E57F84BB2547AC3 /* PeakGlow */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D0576E12672A63EC41EED8D /* Build configuration list for PBXNativeTarget "PeakGlow" */;
+			buildPhases = (
+				73B1EF4AACF42CFBCCAD97F0 /* Sources */,
+				32E8D9BE2312CDB4650B74E5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PeakGlow;
+			packageProductDependencies = (
+			);
+			productName = PeakGlow;
+			productReference = DB7017F1642EF8284228D25F /* PeakGlow.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F92FF475928BCF9F197C59F9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 7587141C2A1D3940BD988E10 /* Build configuration list for PBXProject "PeakGlow" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = CF2147FB37C9CE6FDC2F4469;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 739E21D7B2F1F625E0C76BD8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C902503C5E57F84BB2547AC3 /* PeakGlow */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		32E8D9BE2312CDB4650B74E5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CAA88B5EB9E75ADD581A79A2 /* AppIcon.icon in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		73B1EF4AACF42CFBCCAD97F0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0C827D8DD283534E2C80E975 /* AppDelegate.swift in Sources */,
+				7E4B5EF42BE98B66535685D6 /* AppSettings.swift in Sources */,
+				CA0055BA66B7EF06FA195ED8 /* AppState.swift in Sources */,
+				EAB5C494BCEC6905F683DB32 /* BubbleContentView.swift in Sources */,
+				9472BD2A8EE4018D1BE65F4D /* BubblePanel.swift in Sources */,
+				20949F3D46C7662AC9E77074 /* CPUSampler.swift in Sources */,
+				33DEBAD1296BBB9C53D2CC7B /* FirstRunWindow.swift in Sources */,
+				0AF6604F3B84447A8D82F12C /* GamepadDetector.swift in Sources */,
+				C85DF53558B1C2147F97FAC4 /* GlowMetalView.swift in Sources */,
+				75E52D962DBF0DA416B232AB /* GlowRenderer.swift in Sources */,
+				AF112D09527C13BCA0D2F736 /* GlowWindow.swift in Sources */,
+				5ADA518D0A58FE3C346AFD29 /* LoadLevel.swift in Sources */,
+				2B032AFD630F3D52844285AB /* MachineProfile.swift in Sources */,
+				C8CE40F8867D1AE1641656A5 /* NotchHoverController.swift in Sources */,
+				1258E99142E45C4822D8916A /* NotchedScreenFinder.swift in Sources */,
+				C84C3ADC8A669FE527FADEC3 /* PowerSampler.swift in Sources */,
+				F6B5AC507E4F5D935F9247EF /* SettingsView.swift in Sources */,
+				CA05C618538B330CE92761A3 /* Shaders.metal in Sources */,
+				8247575F1B04868197DAA8E4 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0C06D988E72CC4F6B5699CEB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = PeakGlow/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				METAL_ENABLED = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sirosafc.peakglow;
+				PRODUCT_NAME = PeakGlow;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		7E96029FF3E81997D2BBBE9D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_IDENTITY = "";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.10;
+			};
+			name = Release;
+		};
+		9C40740F73F0241EC4702019 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = PeakGlow/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				METAL_ENABLED = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sirosafc.peakglow;
+				PRODUCT_NAME = PeakGlow;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DCAF4DAE69E01ABBBA000C3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_IDENTITY = "";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.10;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4D0576E12672A63EC41EED8D /* Build configuration list for PBXNativeTarget "PeakGlow" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0C06D988E72CC4F6B5699CEB /* Debug */,
+				9C40740F73F0241EC4702019 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7587141C2A1D3940BD988E10 /* Build configuration list for PBXProject "PeakGlow" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DCAF4DAE69E01ABBBA000C3A /* Debug */,
+				7E96029FF3E81997D2BBBE9D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F92FF475928BCF9F197C59F9 /* Project object */;
+}
