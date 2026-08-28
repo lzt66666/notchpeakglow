@@ -9,6 +9,18 @@ final class GlowRenderer {
     var targetLevel: LoadLevel = .low   // low → intensity 0
     var headroom: Float = 1.0
     var paused = false                  // 全屏/睡眠时
+    /// 过热模式：蓝呼吸基底上每 3–5s 随机红闪一次
+    var overheat = false {
+        didSet {
+            if overheat && !oldValue {
+                nextRedAt = CACurrentMediaTime() + 1.2   // 进入后稍候首闪
+            } else if !overheat {
+                redFlash = 0
+            }
+        }
+    }
+    /// 过热红光相对蓝色的额外增益（×），由设置传入
+    var overheatGain: Float = 1.5
     /// 完全淡出后为 true，宿主视图据此暂停 displaylink（零功耗）
     private(set) var isIdle = true
 
@@ -20,6 +32,10 @@ final class GlowRenderer {
     private var modeMix: Float = 0
     private var lastRender: CFTimeInterval = 0
     private var startTime = CFAbsoluteTimeGetCurrent()
+
+    private var redFlash: Float = 0          // 当前红闪包络 0..1
+    private var nextRedAt: CFTimeInterval = 0
+    private var debugCount = 0
 
     /// notch 中心（像素），由主线程设置
     var notchCenterPixels: CGPoint = .zero
@@ -79,6 +95,21 @@ final class GlowRenderer {
         guard let drawable = layer.nextDrawable() else { return }
         let drawableSize = layer.drawableSize
 
+        // 过热红闪调度：3–5s 随机间隔触发一次，1.2s 线性衰减
+        if overheat, !paused, intensity > 0.15 {
+            if now >= nextRedAt {
+                redFlash = 1
+                nextRedAt = now + 3.0 + Double.random(in: 0...2)
+            }
+        }
+        if redFlash > 0 {
+            redFlash = max(0, redFlash - Float(dt) / 1.2)
+        }
+        if overheat, debugCount < 5 {
+            debugCount += 1
+            NSLog("PeakGlow: OH now=\(now) nextRed=\(nextRedAt) rf=\(redFlash) intensity=\(intensity) paused=\(paused)")
+        }
+
         let baseBoost = 1.0 + (headroom - 1.0) * Float(s.hdrFactor)
         let userTrim = (Float(s.hdrFactor) - 3.0) * 0.5
 
@@ -91,7 +122,10 @@ final class GlowRenderer {
             hdrBoost: baseBoost + userTrim,
             pulseHz: Float(s.pulseHz),
             glowScale: Float(drawableSize.height),
-            mediumAlpha: Float(s.mediumAlpha))
+            mediumAlpha: Float(s.mediumAlpha),
+            redFlash: redFlash * Float(s.glowIntensity),
+            redGain: Float(s.overheatGain),
+            redScale: Float(s.overheatScale))
 
         let pass = MTLRenderPassDescriptor()
         pass.colorAttachments[0].texture = drawable.texture
@@ -121,4 +155,7 @@ struct Uniforms {
     var pulseHz: Float
     var glowScale: Float
     var mediumAlpha: Float
+    var redFlash: Float
+    var redGain: Float
+    var redScale: Float
 }

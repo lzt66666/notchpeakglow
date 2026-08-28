@@ -8,6 +8,8 @@ final class AppState: ObservableObject {
     @Published var cpuPercent: Double = 0
     @Published var watts: Double = 0
     @Published var effectiveLevel: LoadLevel = .low
+    /// 真实过热降频告警激活中（区分于普通高档）
+    @Published var overheatAlarm = false
     @Published var preview: PreviewLevel {
         didSet { AppSettings.shared.previewLevelRaw = preview.rawValue }
     }

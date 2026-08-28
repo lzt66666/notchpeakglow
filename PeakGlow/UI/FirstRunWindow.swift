@@ -41,13 +41,13 @@ private struct FirstRunContentView: View {
 
             VStack(alignment: .leading, spacing: 10) {
                 Label {
-                    Text("本应用**没有 Dock 图标**，也**不占用菜单栏**空间")
+                    Text("本应用没有 Dock 图标，也不占用菜单栏空间")
                 } icon: {
                     Image(systemName: "eye.slash")
                         .foregroundStyle(.secondary)
                 }
                 Label {
-                    Text("将鼠标指针移到屏幕顶部的**刘海（摄像头区域）**并停留片刻，即可呼出控制气泡")
+                    Text("将鼠标指针移到屏幕顶部的刘海（摄像头区域）并停留片刻，即可呼出控制气泡")
                 } icon: {
                     Image(systemName: "camera.metering.center")
                         .foregroundStyle(.secondary)

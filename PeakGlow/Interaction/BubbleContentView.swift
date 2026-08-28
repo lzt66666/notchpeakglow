@@ -17,11 +17,20 @@ struct BubbleContentView: View {
             // 状态行
             HStack(spacing: 10) {
                 Circle()
-                    .fill(levelColor)
+                    .fill(app.overheatAlarm ? Color.red : levelColor)
                     .frame(width: 10, height: 10)
-                Text("\(app.effectiveLevel.label)负载")
-                    .font(.system(size: 15, weight: .semibold))
-                    .foregroundStyle(.white)
+                if app.overheatAlarm {
+                    Text("过热降频")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(.white)
+                    Image(systemName: "flame.fill")
+                        .font(.system(size: 12))
+                        .foregroundStyle(.orange)
+                } else {
+                    Text("\(app.effectiveLevel.label)负载")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(.white)
+                }
                 Spacer()
                 Text(app.watts > 0.5 ? String(format: "%.1f W", app.watts) : "— W")
                     .font(.system(size: 24, weight: .bold, design: .rounded))

@@ -17,6 +17,10 @@ struct MachineProfile {
     let suggestedMediumWatts: Double
     /// 高档阈值建议（W）
     let suggestedHighWatts: Double
+    /// 过热判定温度阈值（°C，SMC die 温度口径）；nil = 无该机型数据（不启用温度判据）
+    let overheatTempThreshold: Double?
+    /// 过热解除温度阈值（°C）
+    let overheatCoolThreshold: Double?
 
     /// 检测结果缓存（进程内只检测一次）
     static let current: MachineProfile = detect()
@@ -65,13 +69,28 @@ struct MachineProfile {
         case .unknown: medium = 30; high = 55
         }
 
+        // 过热判定温度阈值（°C，SMC Tp die 温度口径）：
+        // Pro 有风扇：powermetrics 实测降频点 avg≥95/max≥98 → Tp max 阈值 96
+        // Air 无风扇：节流稳态 avg 96-99 / max 103-105；无风扇散热弱需更早介入 → 触发 95 / 解除 88
+        let hotT: Double?, coolT: Double?
+        switch family {
+        case .air:
+            hotT = 98.0; coolT = 88.0    // 空闲 Tp≈40-55，日常负载峰值 ~80；95+ 即贴顶节流前兆
+        case .pro14, .pro16:
+            hotT = 96.0; coolT = 90.0
+        case .unknown:
+            hotT = nil; coolT = nil      // 无数据机型仅靠 thermalState 判定
+        }
+
         return MachineProfile(
             family: family,
             productName: product,
             chipName: chip,
             coreCount: cores,
             suggestedMediumWatts: medium,
-            suggestedHighWatts: high)
+            suggestedHighWatts: high,
+            overheatTempThreshold: hotT,
+            overheatCoolThreshold: coolT)
     }
 
     /// 简短描述（设置面板显示）

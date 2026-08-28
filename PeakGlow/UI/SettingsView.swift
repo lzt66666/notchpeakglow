@@ -75,6 +75,8 @@ struct SettingsView: View {
                         sliderRow("中档透明度", alpha, range: 0.2...0.8, format: "%.0f%%")
                         sliderRow("呼吸频率", pulse, range: 0.2...2, format: "%.1fHz")
                         sliderRow("HDR 强度系数", hdr, range: 1...8, format: "%.1f×")
+                        sliderRow("过热红光增益", redGainB, range: 0.5...8.0, format: "%.2f×")
+                        sliderRow("过热红光大小", redScaleB, range: 0.6...1.8, format: "%.2f×")
                         sliderRow("帧率上限", fps, range: 15...60, format: "%.0ffps")
                     }
                     .padding(8)
@@ -83,11 +85,13 @@ struct SettingsView: View {
                 // 行为
                 GroupBox("行为") {
                     VStack(alignment: .leading, spacing: 10) {
+                        Toggle("过热降频提醒（温度过高时红光闪烁）", isOn: overheatAlert)
                         sliderRow("悬停驻留时长", dwell, range: 0.2...1.5, format: "%.1fs")
                         Toggle("登录时启动", isOn: launchAtLogin)
                     }
                     .padding(8)
                 }
+
 
                 HStack {
                     Spacer()
@@ -131,11 +135,20 @@ struct SettingsView: View {
     private var hdr: Binding<Double> {
         Binding(get: { s.hdrFactor }, set: { s.hdrFactor = $0 })
     }
+    private var redGainB: Binding<Double> {
+        Binding(get: { s.overheatGain }, set: { s.overheatGain = $0 })
+    }
+    private var redScaleB: Binding<Double> {
+        Binding(get: { s.overheatScale }, set: { s.overheatScale = $0 })
+    }
     private var fps: Binding<Double> {
         Binding(get: { s.frameRate }, set: { s.frameRate = $0 })
     }
     private var dwell: Binding<Double> {
         Binding(get: { s.hoverDwell }, set: { s.hoverDwell = $0 })
+    }
+    private var overheatAlert: Binding<Bool> {
+        Binding(get: { s.overheatAlertEnabled }, set: { s.overheatAlertEnabled = $0 })
     }
     private var launchAtLogin: Binding<Bool> {
         Binding(get: { SMAppService.mainApp.status == .enabled },

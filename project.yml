@@ -1,0 +1,30 @@
+name: PeakGlow
+options:
+  bundleIdPrefix: com.sirosafc
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.10"
+    CODE_SIGNING_ALLOWED: "NO"
+    CODE_SIGN_IDENTITY: ""
+targets:
+  PeakGlow:
+    type: application
+    platform: macOS
+    sources:
+      - path: PeakGlow
+        excludes:
+          - "Info.plist"
+    settings:
+      base:
+        INFOPLIST_FILE: PeakGlow/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.sirosafc.peakglow
+        PRODUCT_NAME: PeakGlow
+        METAL_ENABLED: "YES"
+        GENERATE_INFOPLIST_FILE: "NO"
+        ENABLE_HARDENED_RUNTIME: "NO"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS: "YES"
+    scheme: {}

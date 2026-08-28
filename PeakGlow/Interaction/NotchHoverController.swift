@@ -12,6 +12,7 @@ final class NotchHoverController {
     private var outsidePoll: Timer?
     private var outsideSince: Date?
     private var globalClickMonitor: Any?
+    private var watchdogTimer: Timer?
     private var bubbleVisible = false
     private var notchFrame: CGRect = .zero
 
@@ -22,6 +23,33 @@ final class NotchHoverController {
         NotificationCenter.default.addObserver(
             forName: NSApplication.didChangeScreenParametersNotification,
             object: nil, queue: .main) { [weak self] _ in self?.reposition() }
+
+        // 睡眠唤醒/空间切换后，系统可能隐藏 stationary 面板 → 主动恢复
+        let ws = NSWorkspace.shared.notificationCenter
+        ws.addObserver(forName: NSWorkspace.screensDidWakeNotification,
+                       object: nil, queue: .main) { [weak self] _ in self?.ensureVisible() }
+        ws.addObserver(forName: NSWorkspace.activeSpaceDidChangeNotification,
+                       object: nil, queue: .main) { [weak self] _ in self?.ensureVisible() }
+
+        // 看门狗：周期自检悬停热区仍在屏（兜底上述通知未覆盖的场景）
+        watchdogTimer = Timer.scheduledTimer(withTimeInterval: 300, repeats: true) { [weak self] _ in
+            self?.ensureVisible()
+        }
+    }
+
+    /// 悬停热区健康检查：不可见/被遮蔽时重建
+    func ensureVisible() {
+        guard let p = hoverPanel else {
+            reposition()
+            return
+        }
+        if !p.isVisible {
+            reposition()
+            return
+        }
+        if !p.occlusionState.contains(.visible) {
+            p.orderFrontRegardless()
+        }
     }
 
     func reposition() {
@@ -40,6 +68,7 @@ final class NotchHoverController {
         p.isOpaque = false
         p.backgroundColor = .clear
         p.hasShadow = false
+        p.hidesOnDeactivate = false   // 关键：锁屏/切 App 时系统默认会收起面板
         p.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.statusWindow)))
         p.collectionBehavior = [.canJoinAllSpaces, .stationary, .ignoresCycle]
         p.isMovable = false
@@ -79,6 +108,8 @@ final class NotchHoverController {
 
     private func showBubble() {
         bubbleVisible = true
+        // 触控板 haptic 反馈（Magic Trackpad/内建触控板有效，鼠标静默）
+        NSHapticFeedbackManager.defaultPerformer.perform(.alignment, performanceTime: .now)
         onShowBubble?()
         startOutsideWatch()
         installClickMonitor()

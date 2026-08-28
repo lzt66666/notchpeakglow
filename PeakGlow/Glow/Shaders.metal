@@ -11,6 +11,9 @@ struct Uniforms {
     float  pulseHz;
     float  glowScale;     // 光晕尺度
     float  mediumAlpha;   // 中档峰值透明度
+    float  redFlash;      // 过热红闪包络 0..1
+    float  redGain;       // 过热红光相对蓝的额外增益
+    float  redScale;      // 过热红光相对蓝的尺寸倍率
 };
 
 float hash21(float2 p) {
@@ -59,10 +62,20 @@ fragment float4 fragmentShader(FragmentInput in [[stage_in]],
                                constant Uniforms &u [[buffer(0)]]) {
     float2 frag = in.position.xy;  // 已是像素坐标（左上原点）
 
+    // 过热门控提前计算：红光在呼吸暗相放行
+    float pulse = 0.5 + 0.5 * sin(6.28318 * u.pulseHz * u.time);
+    float darkPhase = 1.0 - pulse;
+    float gate = (u.redFlash > 0.001)
+        ? smoothstep(0.35, 0.95, darkPhase) : 0.0;
+    float flash = u.redFlash > 0.001 ? pow(u.redFlash, 0.6) * gate : 0.0;
+
+    // 光晕尺度：红闪时按 redScale 膨胀（flash 渐变过渡，不跳变）
+    float scale = u.glowScale * mix(1.0, u.redScale, flash);
+
     // 不对称椭圆：刘海下方延伸长、上方短（上方被屏幕顶边自然截断）
-    float dx = (frag.x - u.notchCenter.x) / u.glowScale;
+    float dx = (frag.x - u.notchCenter.x) / scale;
     float dy = frag.y - u.notchCenter.y;
-    float ry = (dy > 0.0) ? u.glowScale * 0.62 : u.glowScale * 0.30;
+    float ry = (dy > 0.0) ? scale * 0.62 : scale * 0.30;
     float2 d = float2(dx, dy / ry);
     float dist = length(d);
 
@@ -80,12 +93,19 @@ fragment float4 fragmentShader(FragmentInput in [[stage_in]],
     rainbow *= 1.0 + (u.hdrBoost - 1.0) * 0.5;
 
     // ---- 高档：鲜艳蓝 + HDR 呼吸 ----
-    float pulse = 0.5 + 0.5 * sin(6.28318 * u.pulseHz * u.time);
     float3 blue = float3(0.22, 0.48, 1.0) * (1.0 + (u.hdrBoost - 1.0) * (0.55 + 0.45 * pulse));
     blue *= 0.85 + 0.3 * pulse;   // 亮度呼吸
 
     float3 color = mix(rainbow, blue, u.modeMix);
     float alpha = falloff * mix(u.mediumAlpha, 0.95, u.modeMix) * u.intensity;
+
+    // 过热红闪：与蓝同源 HDR 增益 ×redGain 超亮压制；
+    if (flash > 0.001) {
+        float3 redc = float3(1.00, 0.06, 0.04)
+                    * (1.0 + (u.hdrBoost - 1.0) * (0.55 + 0.45 * pulse) * u.redGain);
+        color = color * (1.0 - flash) + redc * flash;
+        alpha = min(1.0, alpha * (1.0 + flash * 0.4));
+    }
 
     return float4(color * alpha, alpha);
 }

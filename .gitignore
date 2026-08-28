@@ -1,0 +1,17 @@
+.DS_Store
+xcuserdata/
+*.xcuserstate
+build/
+DerivedData/
+*.ipa
+*.dSYM
+*.dSYM.zip
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.pbxuser
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?

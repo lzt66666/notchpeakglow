@@ -7,6 +7,7 @@ final class GlowWindow {
     private var currentScreen: NSScreen?
     private var headroomTimer: Timer?
     private var pendingLevel: LoadLevel?
+    private var pausedByGamepad = false
 
     // MARK: - 生命周期
 
@@ -26,17 +27,30 @@ final class GlowWindow {
 
     func setLevel(_ level: LoadLevel) {
         pendingLevel = level
+        // 预览档（非 auto）不受手柄暂停影响
+        if AppSettings.shared.preview != .auto { pausedByGamepad = false }
+        syncPauseState()
         metalView?.renderer?.targetLevel = level
         metalView?.wake()
     }
 
+    func setOverheat(_ on: Bool, gainBoost: Float = 1.5) {
+        if let r = metalView?.renderer { r.overheatGain = gainBoost }
+        metalView?.renderer?.overheat = on
+    }
+
     func setPaused(_ paused: Bool) {
-        if let r = metalView?.renderer { r.paused = paused }
-        if paused {
-            metalView?.sleep()
-        } else {
-            metalView?.wake()
-        }
+        pausedByGamepad = paused
+        syncPauseState()
+    }
+
+    /// 实际暂停 = 手柄暂停 && 当前为自动档。
+    /// 暂停时不直接停 Timer：由 renderer.paused 驱动淡出动画，
+    /// 淡出完成后 renderTick 检测 isIdle 自行停止（避免光晕冻结在屏幕上）。
+    private func syncPauseState() {
+        let effective = pausedByGamepad && AppSettings.shared.preview == .auto
+        if let r = metalView?.renderer { r.paused = effective }
+        metalView?.wake()   // 确保 Timer 在跑以完成淡出；已 idle 时下一帧即自停
     }
 
     // MARK: - 布局
@@ -49,10 +63,12 @@ final class GlowWindow {
         }
         currentScreen = screen
 
-        // 光晕整体等比缩放：窗口（限制框）与 shader 椭圆同步缩放
+        // 光晕整体等比缩放：窗口（限制框）与 shader 椭圆同步缩放；
+        // 高度额外按过热红光最大膨胀倍率预留，避免红闪时被窗口裁剪
         let scale = CGFloat(AppSettings.shared.glowScale)
+        let redPad = CGFloat(AppSettings.shared.overheatScale) - 1.0
         let width = 720.0 * scale
-        let height = 210.0 * scale
+        let height = 210.0 * scale * (1.0 + redPad)
         let frame = CGRect(
             x: notch.midX - width / 2,
             y: screen.frame.maxY - height,   // 贴屏幕顶端（窗口坐标原点左下）
@@ -111,9 +127,14 @@ final class GlowWindow {
 
     private func startHeadroomPolling() {
         headroomTimer?.invalidate()
-        headroomTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { [weak self] _ in
-            if let s = self?.currentScreen {
-                self?.updateHeadroom(screen: s)
+        headroomTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { [weak self] _ in
+            guard let self else { return }
+            if let s = self.currentScreen {
+                self.updateHeadroom(screen: s)
+            }
+            // 自愈：睡眠/唤醒后 stationary 窗口可能被系统收起
+            if let p = self.panel, p.isVisible, !p.occlusionState.contains(.visible) {
+                p.orderFrontRegardless()
             }
         }
     }

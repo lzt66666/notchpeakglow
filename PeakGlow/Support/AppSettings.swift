@@ -1,7 +1,7 @@
 import Foundation
 
 enum PreviewLevel: Int, CaseIterable {
-    case low = 0, medium = 1, high = 2, auto = 3
+    case low = 0, medium = 1, high = 2, auto = 3, overheat = 4
 
     var label: String {
         switch self {
@@ -9,6 +9,7 @@ enum PreviewLevel: Int, CaseIterable {
         case .medium: return "中"
         case .high: return "高"
         case .auto: return "自动"
+        case .overheat: return "降频"
         }
     }
 }
@@ -32,29 +33,37 @@ final class AppSettings {
         static let mediumAlpha = "mediumAlpha"
         static let pulseHz = "pulseHz"
         static let hdrFactor = "hdrFactor"
+        static let overheatGain = "overheatGain"
+        static let overheatScale = "overheatScale"
         static let frameRate = "frameRate"
         static let hoverDwell = "hoverDwell"
         static let previewLevel = "previewLevel"
         static let powerTuned = "powerTuned"
         static let firstRunDone = "firstRunDone"
+        static let overheatAlarm = "overheatAlarm"
+        static let overheatAlertEnabled = "overheatAlertEnabled"
     }
 
     // MARK: - Defaults
+    // 注：以下为作者实机调校后的出厂默认值
     struct Defaults {
         static let mediumWatts = MachineProfile.current.suggestedMediumWatts
         static let highWatts = MachineProfile.current.suggestedHighWatts
-        static let holdOnSeconds = 1.5
+        static let holdOnSeconds = 1.2
         static let hysteresisWatts = 4.0
         static let sampleInterval = 0.5
-        static let glowScale = 1.0
-        static let glowIntensity = 1.0
+        static let glowScale = 0.68
+        static let glowIntensity = 0.73
         static let mediumAlpha = 0.75
         static let pulseHz = 0.5
-        static let hdrFactor = 3.0
+        static let hdrFactor = 2.1
+        static let overheatGain = 4.5
+        static let overheatScale = 1.3
         static let frameRate = 30.0
-        static let hoverDwell = 0.4
+        static let hoverDwell = 0.3
         static let previewLevel = PreviewLevel.auto.rawValue
         static let powerTuned = false
+        static let firstRunDone = false
     }
 
     private func get<T>(_ key: String, _ fallback: T) -> T {
@@ -111,6 +120,16 @@ final class AppSettings {
         get { get(Key.hdrFactor, Defaults.hdrFactor) }
         set { set(Double(newValue), Key.hdrFactor) }
     }
+    /// 过热红光相对蓝色的额外增益（×），1.0=与蓝同亮度
+    var overheatGain: Double {
+        get { get(Key.overheatGain, Defaults.overheatGain) }
+        set { set(Double(newValue), Key.overheatGain) }
+    }
+    /// 过热红光相对蓝的尺寸倍率（红闪时光晕膨胀）
+    var overheatScale: Double {
+        get { get(Key.overheatScale, Defaults.overheatScale) }
+        set { set(Double(newValue), Key.overheatScale) }
+    }
     var frameRate: Double {
         get { get(Key.frameRate, Defaults.frameRate) }
         set { set(Double(newValue), Key.frameRate) }
@@ -135,6 +154,16 @@ final class AppSettings {
         get { get(Key.firstRunDone, false) }
         set { set(newValue, Key.firstRunDone) }
     }
+    /// 真实过热告警状态（ThermalMonitor 写入，重启后由其重新评估）
+    var overheatAlarm: Bool {
+        get { get(Key.overheatAlarm, false) }
+        set { set(newValue, Key.overheatAlarm) }
+    }
+    /// 过热降频提醒开关（不想被打扰的用户可关闭；关闭后预览"热"档仍可用）
+    var overheatAlertEnabled: Bool {
+        get { get(Key.overheatAlertEnabled, true) }
+        set { set(newValue, Key.overheatAlertEnabled) }
+    }
 
     var preview: PreviewLevel { PreviewLevel(rawValue: previewLevelRaw) ?? .auto }
 
@@ -149,6 +178,8 @@ final class AppSettings {
         mediumAlpha = Defaults.mediumAlpha
         pulseHz = Defaults.pulseHz
         hdrFactor = Defaults.hdrFactor
+        overheatGain = Defaults.overheatGain
+        overheatScale = Defaults.overheatScale
         frameRate = Defaults.frameRate
         hoverDwell = Defaults.hoverDwell
         previewLevelRaw = Defaults.previewLevel
