@@ -1,6 +1,8 @@
 # PeakGlow
 
-> 刘海会说谎，但功率不会。—— 让你的 MacBook 刘海在整机高负载时发光提醒
+> 本App从logo到代码到文档都是AI写的，最终版本也是AI发布的，人类只负责花钱和指手画脚
+>
+> 大概是最终版本了，如果后续macOS更新了导致api不兼容我会回来更新一下下
 
 [![macOS 14+](https://img.shields.io/badge/macOS-14%2B-black)](https://developer.apple.com/macos/)
 [![Apple Silicon](https://img.shields.io/badge/Apple-Silicon-blue)](https://developer.apple.com/silicon/)
@@ -13,6 +15,7 @@ PeakGlow 是一款 macOS 菜单栏常驻小工具（好吧，其实它连菜单�
 | 低 | 无任何视觉提示（零渲染、零开销） |
 | 中 | 刘海周围缓慢流动的彩虹光晕（Apple Intelligence 极光风，带 HDR） |
 | 高 | 鲜艳蓝色光晕 + HDR 峰值亮度 + 0.5Hz 呼吸脉冲 |
+| 过热 | 鲜艳蓝色光晕 + 随机红色闪光 + HDR 峰值亮度 + 0.5Hz 呼吸脉冲 |
 
 <p align="center"><sub>（此处预留效果图）</sub></p>
 
@@ -28,7 +31,7 @@ PeakGlow 是一款 macOS 菜单栏常驻小工具（好吧，其实它连菜单�
   | MacBook Pro 16" | 30 W | 55 W |
 - **真 HDR 渲染** —— Metal `rgba16Float` + extended linear sRGB + EDR headroom 自适应，XDR 屏幕 blue 光可达 SDR 白之上；不支持的屏幕自动回退鲜艳 SDR
 - **防误触** —— 5 样本滑动平均 + 滞回 + 保持时间，瞬时功率尖峰不会触发动画
-- **游戏友好** —— 原生全屏空间（大多数游戏）中光晕自动不可见；光晕窗口 `ignoresMouseEvents` 全穿透、`sharingType = .none` **不出现在截图与录屏中**
+- **游戏友好** —— 检测到手柄自动停止渲染；光晕窗口 `ignoresMouseEvents` 全穿透、`sharingType = .none` **不出现在截图与录屏中**
 - **省电** —— 低负载时渲染完全停止，空闲自身 CPU 占用 ≈ 0
 
 ## 系统要求
