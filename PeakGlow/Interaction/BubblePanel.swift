@@ -33,7 +33,7 @@ final class BubblePanelController: NSObject {
         p.backgroundColor = .clear
         p.hasShadow = true
         p.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.statusWindow)) + 2)
-        p.collectionBehavior = [.canJoinAllSpaces, .stationary, .ignoresCycle]
+        p.collectionBehavior = [.moveToActiveSpace, .ignoresCycle]
         p.isMovable = false
         p.hidesOnDeactivate = false
         p.acceptsMouseMovedEvents = true
