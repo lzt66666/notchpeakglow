@@ -28,10 +28,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         var wattWindow: [Double] = []
         sampler.onSample = { [weak self] avg in
             guard let self else { return }
-            AppState.shared.cpuPercent = avg * 100
+            let state = AppState.shared
 
             guard let w = powerSampler.readWatts(), w > 0 else { return }
-            AppState.shared.watts = w
+            // 气泡不可见时不触碰 @Published（隐藏的 SwiftUI 视图无需持续重渲染）
+            if state.bubbleVisible { state.watts = w }
             // 5 样本滑动平均（默认 0.5s 采样 = 2.5s 窗口），滤除瞬时尖峰
             wattWindow.append(w)
             if wattWindow.count > 5 { wattWindow.removeFirst() }

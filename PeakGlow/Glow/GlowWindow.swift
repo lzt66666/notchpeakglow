@@ -6,6 +6,7 @@ final class GlowWindow {
     private var metalView: GlowMetalView?
     private var currentScreen: NSScreen?
     private var headroomTimer: Timer?
+    private var screenChangeDebounce: Timer?
     private var pendingLevel: LoadLevel?
     private var pausedByGamepad = false
 
@@ -140,10 +141,16 @@ final class GlowWindow {
     }
 
     private func observeScreenChanges() {
+        // 唤醒时屏幕参数通知成串到达，合并防抖避免反复 setFrame/重建 drawable
         NotificationCenter.default.addObserver(
             forName: NSApplication.didChangeScreenParametersNotification,
             object: nil, queue: .main) { [weak self] _ in
-            self?.reposition()
+            guard let self else { return }
+            self.screenChangeDebounce?.invalidate()
+            self.screenChangeDebounce = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
+                self?.screenChangeDebounce = nil
+                self?.reposition()
+            }
         }
     }
 }

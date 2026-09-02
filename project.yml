@@ -22,6 +22,8 @@ targets:
         INFOPLIST_FILE: PeakGlow/Info.plist
         PRODUCT_BUNDLE_IDENTIFIER: com.sirosafc.peakglow
         PRODUCT_NAME: PeakGlow
+        MARKETING_VERSION: "1.5.2"
+        CURRENT_PROJECT_VERSION: "1"
         METAL_ENABLED: "YES"
         GENERATE_INFOPLIST_FILE: "NO"
         ENABLE_HARDENED_RUNTIME: "NO"

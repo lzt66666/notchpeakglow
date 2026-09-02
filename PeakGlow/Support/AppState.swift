@@ -5,7 +5,8 @@ import Combine
 final class AppState: ObservableObject {
     static let shared = AppState()
 
-    @Published var cpuPercent: Double = 0
+    /// 气泡是否可见：不可见时冻结 @Published 更新，避免 SwiftUI 每秒空转重渲染
+    var bubbleVisible = false
     @Published var watts: Double = 0
     @Published var effectiveLevel: LoadLevel = .low
     /// 真实过热降频告警激活中（区分于普通高档）

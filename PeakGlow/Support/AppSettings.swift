@@ -59,7 +59,8 @@ final class AppSettings {
         static let hdrFactor = 2.1
         static let overheatGain = 4.5
         static let overheatScale = 1.3
-        static let frameRate = 30.0
+        // 呼吸/渐变均为慢效果，15fps 视觉无差别且 GPU/能耗减半
+        static let frameRate = 15.0
         static let hoverDwell = 0.3
         static let previewLevel = PreviewLevel.auto.rawValue
         static let powerTuned = false

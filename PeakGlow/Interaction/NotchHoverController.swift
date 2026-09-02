@@ -13,6 +13,7 @@ final class NotchHoverController {
     private var outsideSince: Date?
     private var globalClickMonitor: Any?
     private var watchdogTimer: Timer?
+    private var pendingReposition: Timer?
     private var bubbleVisible = false
     private var notchFrame: CGRect = .zero
 
@@ -20,16 +21,19 @@ final class NotchHoverController {
 
     func start() {
         reposition()
+        // 唤醒/切空间/屏幕参数变化会成串触发（3~6次/秒），
+        // 全部合并防抖：此前每次都销毁重建 NSPanel，唤醒瞬间产生大量
+        // WindowServer 窗口创建/销毁 RPC，造成数秒 CPU 尖峰
         NotificationCenter.default.addObserver(
             forName: NSApplication.didChangeScreenParametersNotification,
-            object: nil, queue: .main) { [weak self] _ in self?.reposition() }
+            object: nil, queue: .main) { [weak self] _ in self?.scheduleReposition() }
 
         // 睡眠唤醒/空间切换后，系统可能隐藏 stationary 面板 → 主动恢复
         let ws = NSWorkspace.shared.notificationCenter
         ws.addObserver(forName: NSWorkspace.screensDidWakeNotification,
-                       object: nil, queue: .main) { [weak self] _ in self?.ensureVisible() }
+                       object: nil, queue: .main) { [weak self] _ in self?.scheduleReposition() }
         ws.addObserver(forName: NSWorkspace.activeSpaceDidChangeNotification,
-                       object: nil, queue: .main) { [weak self] _ in self?.ensureVisible() }
+                       object: nil, queue: .main) { [weak self] _ in self?.scheduleReposition() }
 
         // 看门狗：周期自检悬停热区仍在屏（兜底上述通知未覆盖的场景）
         watchdogTimer = Timer.scheduledTimer(withTimeInterval: 300, repeats: true) { [weak self] _ in
@@ -37,7 +41,16 @@ final class NotchHoverController {
         }
     }
 
-    /// 悬停热区健康检查：不可见/被遮蔽时重建
+    /// 合并 0.5s 内的连续 reposition 请求为一次
+    private func scheduleReposition() {
+        pendingReposition?.invalidate()
+        pendingReposition = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
+            self?.pendingReposition = nil
+            self?.reposition()
+        }
+    }
+
+    /// 悬停热区健康检查：不可见/被遮蔽时恢复
     func ensureVisible() {
         guard let p = hoverPanel else {
             reposition()
@@ -53,31 +66,41 @@ final class NotchHoverController {
     }
 
     func reposition() {
-        hoverPanel?.close()
-        hoverPanel = nil
-
+        // 复用已有面板：仅 setFrame/orderFront，不做销毁重建
         guard let screen = NotchedScreenFinder.find(),
-              let notch = NotchedScreenFinder.notchRect(of: screen) else { return }
+              let notch = NotchedScreenFinder.notchRect(of: screen) else {
+            hoverPanel?.orderOut(nil)   // 仅隐藏；屏幕恢复后由 reposition 重新显示
+            return
+        }
         notchFrame = notch
 
-        let p = NSPanel(
-            contentRect: notch,
-            styleMask: [.borderless, .nonactivatingPanel],
-            backing: .buffered,
-            defer: false)
-        p.isOpaque = false
-        p.backgroundColor = .clear
-        p.hasShadow = false
-        p.hidesOnDeactivate = false   // 关键：锁屏/切 App 时系统默认会收起面板
-        p.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.statusWindow)))
-        p.collectionBehavior = [.canJoinAllSpaces, .stationary, .ignoresCycle]
-        p.isMovable = false
+        let p: NSPanel
+        if let existing = hoverPanel {
+            p = existing
+        } else {
+            p = NSPanel(
+                contentRect: notch,
+                styleMask: [.borderless, .nonactivatingPanel],
+                backing: .buffered,
+                defer: false)
+            p.isOpaque = false
+            p.backgroundColor = .clear
+            p.hasShadow = false
+            p.hidesOnDeactivate = false   // 关键：锁屏/切 App 时系统默认会收起面板
+            p.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.statusWindow)))
+            p.collectionBehavior = [.canJoinAllSpaces, .stationary, .ignoresCycle]
+            p.isMovable = false
 
-        let view = HoverTargetView(frame: NSRect(origin: .zero, size: notch.size))
-        view.controller = self
-        p.contentView = view
+            let view = HoverTargetView(frame: NSRect(origin: .zero, size: notch.size))
+            view.controller = self
+            p.contentView = view
+            hoverPanel = p
+        }
+
+        if p.frame != notch {
+            p.setFrame(notch, display: false)
+        }
         p.orderFrontRegardless()
-        hoverPanel = p
     }
 
     // MARK: - 对外

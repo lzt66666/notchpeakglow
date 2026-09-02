@@ -62,12 +62,14 @@ final class BubblePanelController: NSObject {
         p.setFrameOrigin(CGPoint(x: notch.midX - p.frame.width / 2,
                                  y: notch.minY - p.frame.height - 8))
         p.alphaValue = 1
+        AppState.shared.bubbleVisible = true
         p.orderFrontRegardless()
     }
 
     func hide() {
         let gen = generation
         guard let panel else { return }
+        AppState.shared.bubbleVisible = false
         NSAnimationContext.runAnimationGroup({ ctx in
             ctx.duration = 0.15
             panel.animator().alphaValue = 0

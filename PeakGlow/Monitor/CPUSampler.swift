@@ -51,8 +51,11 @@ final class CPUSampler {
         var count = natural_t(0)
         var pointer: processor_info_array_t?
         var infoCount = mach_msg_type_number_t(0)
+        // mach_host_self() 返回 +1 引用的发送权限，必须释放，否则每秒泄漏 2 个端口权限
+        let host = mach_host_self()
+        defer { mach_port_deallocate(mach_task_self_, host) }
         let result = host_processor_info(
-            mach_host_self(), PROCESSOR_CPU_LOAD_INFO, &count, &pointer, &infoCount)
+            host, PROCESSOR_CPU_LOAD_INFO, &count, &pointer, &infoCount)
         guard result == KERN_SUCCESS, let ptr = pointer else { return nil }
         defer {
             let size = vm_size_t(infoCount) * vm_size_t(MemoryLayout<integer_t>.stride)
